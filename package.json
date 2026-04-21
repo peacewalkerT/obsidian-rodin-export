@@ -1,6 +1,6 @@
 {
   "name": "obsidian-rodin-export",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Export Obsidian vault to Rodin for intellectual fingerprinting",
   "main": "main.js",
   "scripts": {
