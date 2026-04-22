@@ -301,30 +301,25 @@ class ConfirmExportModal extends Modal {
     if (scan.truncated) {
       const totalK = Math.round(scan.totalChars / 1000);
       const skipped = scan.totalFiles - scan.filesToSend.length;
-      const warn = contentEl.createEl('p');
-      warn.style.color = 'var(--text-warning)';
-      warn.setText(
-        `Your vault has ${scan.totalFiles} files (~${totalK}k characters). ` +
-        `The most recently edited ${scan.filesToSend.length} will be sent; ${skipped} older files won't.`,
-      );
+      contentEl.createEl('p', {
+        cls: 'rodin-export-warn',
+        text:
+          `Your vault has ${scan.totalFiles} files (~${totalK}k characters). ` +
+          `The most recently edited ${scan.filesToSend.length} will be sent; ${skipped} older files won't.`,
+      });
     }
 
-    const privacy = contentEl.createEl('p');
-    privacy.style.color = 'var(--text-muted)';
-    privacy.style.fontSize = '0.9em';
-    privacy.setText(
-      mode === 'evolve'
-        ? 'New themes, questions, and models will be merged with your existing fingerprint. ' +
-          'The submitted text is used once, then removed; only the derived fingerprint persists.'
-        : 'Rodin reads your writing to extract an intellectual fingerprint — themes, mental models, core question, blind spots. ' +
-          'Your text is used once, then removed; only the derived fingerprint persists.',
-    );
+    contentEl.createEl('p', {
+      cls: 'rodin-export-muted',
+      text:
+        mode === 'evolve'
+          ? 'New themes, questions, and models will be merged with your existing fingerprint. ' +
+            'The submitted text is used once, then removed; only the derived fingerprint persists.'
+          : 'Rodin reads your writing to extract an intellectual fingerprint — themes, mental models, core question, blind spots. ' +
+            'Your text is used once, then removed; only the derived fingerprint persists.',
+    });
 
-    const buttons = contentEl.createDiv({ cls: 'modal-button-container' });
-    buttons.style.display = 'flex';
-    buttons.style.gap = '0.5em';
-    buttons.style.justifyContent = 'flex-end';
-    buttons.style.marginTop = '1em';
+    const buttons = contentEl.createDiv({ cls: 'modal-button-container rodin-export-buttons' });
 
     const cancel = buttons.createEl('button', { text: 'Cancel' });
     cancel.addEventListener('click', () => this.close());
@@ -350,8 +345,6 @@ class RodinSettingTab extends PluginSettingTab {
   display() {
     const { containerEl } = this;
     containerEl.empty();
-
-    containerEl.createEl('h2', { text: 'Rodin Export' });
 
     if (this.plugin.isConnected()) {
       this.renderConnected(containerEl);
@@ -393,10 +386,10 @@ class RodinSettingTab extends PluginSettingTab {
       'questions, and models into your existing fingerprint instead of creating a new one each time.',
     );
 
-    const how = containerEl.createEl('p');
-    how.style.color = 'var(--text-muted)';
-    how.style.fontSize = '0.9em';
-    how.setText('Get your connection code at rodin.fyi/p/[your-id]/manage.');
+    containerEl.createEl('p', {
+      cls: 'rodin-export-muted',
+      text: 'Get your connection code at rodin.fyi/p/[your-id]/manage.',
+    });
 
     let codeInput = '';
     new Setting(containerEl)

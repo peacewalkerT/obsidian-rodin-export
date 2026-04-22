@@ -1,0 +1,15 @@
+.rodin-export-warn {
+  color: var(--text-warning);
+}
+
+.rodin-export-muted {
+  color: var(--text-muted);
+  font-size: 0.9em;
+}
+
+.rodin-export-buttons {
+  display: flex;
+  gap: 0.5em;
+  justify-content: flex-end;
+  margin-top: 1em;
+}
