@@ -18,9 +18,22 @@ Send your Obsidian vault to [Rodin](https://rodin.fyi) to generate your **intell
 - **Blind spots** — what your writing avoids
 - **Core question** — the single deepest question driving your thinking
 
+## Evolve an existing fingerprint
+
+Once you have a Rodin profile, you can connect this plugin to evolve it — each export merges new themes, questions, and models into the existing fingerprint instead of creating a new profile.
+
+1. Visit your profile's manage page: `rodin.fyi/p/[your-id]/manage`
+2. Click **Reveal Connection Code** and copy the code
+3. In Obsidian, open **Settings → Export to Rodin**, paste the code, click **Connect**
+4. Future exports will evolve that profile; the confirmation modal tells you which one
+
+You can disconnect any time from the same settings tab.
+
 ## Privacy
 
 Your vault text is sent to rodin.fyi for processing. It is not stored permanently — only the derived fingerprint is kept. See [Rodin's privacy policy](https://rodin.fyi/privacy) for details.
+
+Connection codes are as sensitive as your profile's management link — anyone with the code can overwrite your fingerprint.
 
 ## Support
 
