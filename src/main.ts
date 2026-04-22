@@ -2,7 +2,7 @@ import { App, Modal, Notice, Plugin, PluginSettingTab, Setting, TFile, requestUr
 
 const RODIN_BASE = 'https://rodin.fyi';
 const RODIN_IMPORT_API = `${RODIN_BASE}/api/import`;
-const MAX_CHARS = 200_000;
+const MAX_CHARS = 60_000;
 const MIN_CHARS = 100;
 
 type VaultScan = {
@@ -151,7 +151,6 @@ export default class RodinExportPlugin extends Plugin {
 
     for (const file of files) {
       totalChars += file.stat.size;
-      if (capReached) continue;
       if (charsToSend + file.stat.size > MAX_CHARS) {
         capReached = true;
         continue;
