@@ -21,16 +21,6 @@ interface RodinSettings {
 
 const DEFAULT_SETTINGS: RodinSettings = {};
 
-// Connection codes are base64url(`${id}:${token}`). Both halves of the pair
-// are already user-visible in the manage URL (rodin.fyi/p/[id]/manage?token=…)
-// — the code format just makes a single string the user can copy-paste into
-// the plugin without having to fish two values out of a URL.
-function encodeConnectionCode(id: string, token: string): string {
-  const raw = `${id}:${token}`;
-  const b64 = typeof btoa === 'function' ? btoa(raw) : Buffer.from(raw, 'utf8').toString('base64');
-  return b64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-}
-
 function decodeConnectionCode(code: string): { id: string; token: string } | null {
   const cleaned = code.trim().replace(/\s+/g, '');
   if (!cleaned) return null;
@@ -56,14 +46,14 @@ export default class RodinExportPlugin extends Plugin {
     await this.loadSettings();
 
     this.addRibbonIcon('fingerprint', 'Export to Rodin', () => {
-      this.startExport();
+      void this.startExport();
     });
 
     this.addCommand({
       id: 'export-to-rodin',
       name: 'Export vault to Rodin',
       callback: () => {
-        this.startExport();
+        void this.startExport();
       },
     });
 
@@ -139,10 +129,10 @@ export default class RodinExportPlugin extends Plugin {
     }
 
     const mode = this.isConnected() ? 'evolve' : 'create';
-    new ConfirmExportModal(this.app, scan, mode, this.settings.profileName, () => this.performExport(scan)).open();
+    new ConfirmExportModal(this.app, scan, mode, this.settings.profileName, () => { void this.performExport(scan); }).open();
   }
 
-  async scanVault(): Promise<VaultScan> {
+  scanVault(): VaultScan {
     const files = this.app.vault.getMarkdownFiles().sort((a, b) => b.stat.mtime - a.stat.mtime);
     let charsToSend = 0;
     let totalChars = 0;
